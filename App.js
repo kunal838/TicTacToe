@@ -7,6 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
      <SinglePlayer/>
+    {/*  <Game/> */}
       <StatusBar style="light" />
     </View>
   );
@@ -15,7 +16,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#1A1A40',
     alignItems: 'center',
     justifyContent: 'center',
   },

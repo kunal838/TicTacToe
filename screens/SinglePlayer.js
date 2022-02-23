@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Board } from "../components";
 import { isEmpty, isTerminal } from "../utils/board";
 import { getBestMove } from "../utils/player";
+import * as Haptics from 'expo-haptics';
 
 const SinglePlayer = () => {
   const initialState = [null, null, null, null, null, null, null, null, null];
@@ -20,6 +21,7 @@ const SinglePlayer = () => {
 };
 
 const handleOnCellPressed = (cell) => {
+  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium) 
     if (turn !== "HUMAN") return;
     insertCell(cell, isHumanMaximizing ? "x" : "o");
     setTurn("BOT");
@@ -35,8 +37,11 @@ const handleOnCellPressed = (cell) => {
             reset();
             return;
           }
-          alert(`player ${gameResult.winner} won`);
-          reset();
+         
+          /* const timer = setTimeout(() => {
+            reset()
+          }, 1000);
+          return () => clearTimeout(timer); */
       }
       else{
         if (turn === "BOT") {
@@ -64,16 +69,35 @@ const handleOnCellPressed = (cell) => {
   }, [state, turn]);
 
 
-
+const {width} = Dimensions.get("window")
   return (
-    <View>
+    <>
       <Board
         cells={state}
         onCellPressed={handleOnCellPressed}
-        size={330}
+        size={width}
         disabled={Boolean(isTerminal(state)) || turn !== "HUMAN"}
+        gameResult={gameResult}
+        
       />
-    </View>
+      {gameResult && (
+      <View style={{
+        backgroundColor: "#1DB9C3",
+        width:width-30,
+        borderRadius: 20,
+        height: 170,
+        position:"absolute",
+        bottom:20,
+        justifyContent:"center",
+        alignItems:"center"
+       
+      
+      }}><Text style={{color:"white",fontSize:20}}>Player {gameResult.winner} won the match</Text>
+      <TouchableOpacity onPress={reset} style={{elevation:10,backgroundColor:"#B5FFD9",padding: 6,borderRadius:5,width:"50%",alignItems:"center",marginTop:40,justifyContent:"center"}}><Text style={{fontWeight:"bold",fontSize:18,color:"black", }}>RESET</Text></TouchableOpacity>
+      </View>
+    )}
+      
+    </>
   );
 };
 

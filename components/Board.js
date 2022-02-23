@@ -1,27 +1,28 @@
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { isEmpty,isFull,isTerminal,printFormattedBoard } from "../utils/board"
+import BoardLine from './BoardLine'
 
 
 const Board = ({
     cells,
     size,
     onCellPressed,
-    disable
+    disable,
+    gameResult,
+   
 
 },
     ) => {
-  /*  console.log( isEmpty(cells));
-   console.log( isFull(cells));
-   console.log( isTerminal(cells));
-   printFormattedBoard(cells) */
-   
+  
+   const [state, setstate] = useState(true);
   
   return (
     <View style={{backgroundColor:"White",height:size,width:size,flexDirection:"row",flexWrap:"wrap"}}>
       {cells.map((cell,i)=>(
         <TouchableOpacity key={i} 
-        onPress={() => onCellPressed && onCellPressed(i)}
+        onPress={() => { onCellPressed && onCellPressed(i)} }
+        /* onPress={()=>setstate(!state)} */
         disabled={disable}
         
         style={[{ 
@@ -29,13 +30,14 @@ const Board = ({
         height: "33.33333%",
         borderWidth: 3,
         
-        borderColor: "#fff",
+        borderColor: "#5800FF",
         justifyContent:"center",
         alignItems:"center"
         },styles[`cell${i}`]]}>
-          <Text style={{textAlign:"center",color:"white",fontSize:size/4,height:size/3,width:size/3}}>{cell}</Text>
+          <Text style={{textAlign:"center",color:"#FF008E",fontSize:size/4,height:size/3,width:size/3}}>{cell}</Text>
         </TouchableOpacity>
       ))}
+      {gameResult && <BoardLine size={size} gameResult={gameResult} />}
     </View>
   )
 }
