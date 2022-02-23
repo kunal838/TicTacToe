@@ -47,7 +47,10 @@ const Game = () => {
 
     setState(dummystate);
   };
-  return (<><Board 
+  return (<View style={{flex: 1,
+    backgroundColor: '#1A1A40',
+    alignItems: 'center',
+    justifyContent: 'center',}}><><Board 
   cells={state}
   onCellPressed={handlePress}
   size={width} 
@@ -73,7 +76,7 @@ const Game = () => {
     )}
   
   
-  </>)
+  </></View>)
     
   
 };

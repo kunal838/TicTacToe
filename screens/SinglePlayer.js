@@ -1,4 +1,4 @@
-import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {  Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Board } from "../components";
 import { isEmpty, isTerminal } from "../utils/board";
@@ -38,10 +38,7 @@ const handleOnCellPressed = (cell) => {
             return;
           }
          
-          /* const timer = setTimeout(() => {
-            reset()
-          }, 1000);
-          return () => clearTimeout(timer); */
+         
       }
       else{
         if (turn === "BOT") {
@@ -71,6 +68,10 @@ const handleOnCellPressed = (cell) => {
 
 const {width} = Dimensions.get("window")
   return (
+    <View style={{flex: 1,
+      backgroundColor: '#1A1A40',
+      alignItems: 'center',
+      justifyContent: 'center',}}>
     <>
       <Board
         cells={state}
@@ -98,6 +99,7 @@ const {width} = Dimensions.get("window")
     )}
       
     </>
+    </View>
   );
 };
 
