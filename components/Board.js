@@ -22,7 +22,7 @@ const Board = ({
       {cells.map((cell,i)=>(
         <TouchableOpacity key={i} 
         onPress={() => { onCellPressed && onCellPressed(i)} }
-        /* onPress={()=>setstate(!state)} */
+       
         disabled={disable}
         
         style={[{ 

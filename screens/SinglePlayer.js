@@ -8,6 +8,7 @@ import * as Haptics from 'expo-haptics';
 const SinglePlayer = () => {
   const initialState = [null, null, null, null, null, null, null, null, null];
   const [turn, setTurn] = useState(Math.random() < 0.5 ? "HUMAN" : "BOT");
+  const [hard, setHard] = useState(false);
   const [state, setState] = useState([null, null, null, null, null, null, null, null, null]);
   const [isHumanMaximizing, setIsHumanMaximizing] = useState(true);
   const gameResult = isTerminal(state)
@@ -54,7 +55,7 @@ const handleOnCellPressed = (cell) => {
                     state,
                     !isHumanMaximizing,
                     0,
-                    -1
+                    hard?1:-1
                 );
                 insertCell(best, isHumanMaximizing ? "o" : "x");
                 setTurn("HUMAN");
@@ -63,7 +64,7 @@ const handleOnCellPressed = (cell) => {
       }
       
 
-  }, [state, turn]);
+  }, [state, turn,hard]);
 
 
 const {width} = Dimensions.get("window")
@@ -72,7 +73,14 @@ const {width} = Dimensions.get("window")
       backgroundColor: '#1A1A40',
       alignItems: 'center',
       justifyContent: 'center',}}>
+       
     <>
+   
+    <Text style={{color:"white"}}>Difficulty is {hard?"easy":"hard"}</Text>
+        <TouchableOpacity style={{backgroundColor: "red",padding:10,borderRadius:20}} onPress={()=>setHard(!hard)}>
+      <Text style={{color:"white",fontSize:10}}>Tap to change difficulty</Text>
+    </TouchableOpacity>
+    
       <Board
         cells={state}
         onCellPressed={handleOnCellPressed}
